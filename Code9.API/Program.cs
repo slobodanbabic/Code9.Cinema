@@ -1,5 +1,7 @@
+using Code9.Domain.Handlers;
 using Code9.Domain.Interfaces;
 using Code9.Infrastructure;
+using Code9.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //registration repository
-builder.Services.AddScoped<ICinemaRepository, ICinemaRepository>();
+builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
+
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(GetAllCinemaHandler).Assembly));
 
 var app = builder.Build();
 
